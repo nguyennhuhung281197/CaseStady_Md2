@@ -11,14 +11,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        List<Account> accountList = Arrays.asList();
-       WriteFile<Account> writeFile = new WriteFile<>();
-        writeFile.writeToFile(accountList); ReadFile<Account> readFile = new ReadFile<>();
-        List<Account> dataRead = readFile.readToFile();
-        for (Account account : dataRead) {
-            System.out.println(account);
-        }
-
 
         ManageAccount manageAccount = new ManageAccount();
 
@@ -28,7 +20,7 @@ public class Main {
         while (isRun) {
             Scanner sc = new Scanner(System.in);
             System.out.println("""
-                     +-------------------------------------+
+                     =======================================
                      | 1.Add User Information              |
                      | 2.Display Information               |
                      | 3.Edit Information                  |
@@ -38,7 +30,8 @@ public class Main {
                      | 7.Deposit Money Into Your Account   |
                      | 8.Withdraw Money                    |
                      | 9.Transfer Money                    |
-                     +-------------------------------------+
+                     | 10.Ghi file                         |
+                     =======================================
                     """);
             System.out.println("PLEASE ENTER : ");
             int choice = sc.nextInt();
