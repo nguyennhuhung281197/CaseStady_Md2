@@ -2,28 +2,30 @@ package controller;
 
 import base.AbstractMethod;
 import base.InterfaceAccount;
+import fileio.ReadFile;
 import fileio.WriteFile;
 import modent.Account;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class ManageAccount extends AbstractMethod implements InterfaceAccount {
 
-    private List<Account> accountList = new ArrayList<>();
+    private List<Account> accountList;
 
+    private ReadFile<Account> readFile;
+    private WriteFile<Account>writeFile;
 
     public ManageAccount() {
-        accountList.add(new Account(123, "Hung", 50));
-        accountList.add(new Account(1253, "Nam", 60));
-        accountList.add(new Account(1211, "Dung", 60));
-        accountList.add(new Account(163, "Hai", 70));
+        accountList = new ArrayList<>();
+        readFile = new ReadFile<>();
+        accountList = readFile.readToFile();
+        writeFile = new WriteFile<>();
     }
 
     public ManageAccount(List<Account> accountList) {
         this.accountList = accountList;
+
     }
 
     public void loadMoney() {
@@ -48,9 +50,7 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
                 System.out.println("Successfully Loaded : " + sum + "$");
                 break;
             }
-
         }
-
     }
 
     public void withdrawMoney() {
@@ -161,22 +161,101 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
     }
 
     @Override
-    public boolean removeAccount() {
+    public void removeAccount() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the name you want to delete : ");
-        String xoaTen = sc.nextLine();
-        for (int i = 0; i < accountList.size(); i++) {
-            if (accountList.get(i).getNameAccount().toLowerCase().equals(xoaTen.toLowerCase())) {
-                accountList.remove(accountList.get(i));
-                return true;
-            }
-        }
+        System.out.println("""
+                =====================================================
+                |         What do you want to delete?               | 
+                |1. Delete an account by account number <=          |    
+                |2. Delete all <=                                   |
+                =====================================================""");
+        String input = sc.nextLine();
+        String removeOne = "1";
+        String removeAll = "2";
+        String yes = "a";
+        String no = "b";
 
-        System.err.println("""
-                +-------------+
-                | Not Valid ! |
-                +-------------+""");
-        return false;
+        try {
+            if (removeOne.equals(input)) {
+                boolean check = false;
+                System.out.println("Enter the account number you want to delete ");
+                int num = sc.nextInt();
+                sc.nextLine();
+                System.out.println("Do you want to delete? ");
+                String agree = sc.nextLine();
+                System.out.println("""
+                        +----------+
+                        |a. Yes    |
+                        |b. No     |
+                        +----------+""");
+                if (agree.equals(yes)) {
+                    for (int i = 0; i < accountList.size(); i++) {
+                        if (accountList.get(i).getAccountNumber() == num) {
+                            accountList.remove(i);
+                            check = true;
+                            break;
+                        } else {
+                            check = false;
+
+                        }
+
+                    }
+                    if (check) {
+                        System.out.println("Successful delete");
+                        for (Account account : accountList) {
+                            System.out.println(account);
+                        }
+                    } else {
+                        System.out.println("Does not exist");
+                    }
+                } else if (agree.equals(no)) {
+                    for (Account account : accountList) {
+                        System.out.println(account);
+                    }
+                } else {
+                    throw new IllegalAccessException("""
+                            +-------------+
+                            | Not Valid ! |
+                            +-------------+""");
+                }
+
+
+            } else if (removeAll.equals(input)) {
+                System.out.println("Are you sure you want to delete it?");
+                System.out.println("""
+                        +----------+
+                        | 1. Yes   |
+                        | 2. No    |
+                        +----------+
+                        """);
+                String yes2 = "1";
+                String no2 = "2";
+                String input1 = sc.nextLine();
+                if (yes2.equals(input1)) {
+                    accountList.clear();
+                    for (Account account : accountList) {
+                        System.out.println(account);
+                    }
+                } else if (no2.equals(input1)) {
+                    for (Account account : accountList) {
+                        System.out.println(account);
+                    }
+                } else {
+                    throw new IllegalAccessException("""
+                            +-------------+
+                            | Not Valid ! |
+                            +-------------+""");
+                }
+
+            } else {
+                throw new IllegalAccessException("""
+                        +-------------+
+                        | Not Valid ! |
+                        +-------------+""");
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     @Override
@@ -197,24 +276,80 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
     @Override
     public void searchAccount() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the name you want to search : ");
-        String searchName = sc.nextLine();
-//        for (int i = 0; i < accountList.size(); i++) {
-//            if (accountList.get(i).getNameAccount().toLowerCase().contains(searchName.toLowerCase()));
-//            System.out.println(accountList.get(i));
-//
-//        }
-        accountList.stream().filter(doc -> doc.getNameAccount().equalsIgnoreCase(searchName)).forEach(System.out::println);
+        System.out.println("Want to search for an account name or number?");
+        System.out.println("""
+                ====================================
+                |1.Search by account name <=  |
+                |2.Search account number <=       |
+                ====================================""");
+        String tim = sc.nextLine();
+        String name = "1";
+        String num = "2";
+        try {
 
+
+            if (num.equals(tim)) {
+                System.out.println("nhap stk muon tim : ");
+                int searchNum = sc.nextInt();
+                for (int i = 0; i < accountList.size(); i++) {
+                    if (accountList.get(i).getAccountNumber() == searchNum) {
+                        System.out.println(accountList.get(i));
+                    }
+                }
+            } else if (name.equals(tim)) {
+                System.out.println("Enter the name you want to search : ");
+                String searchName = sc.nextLine();
+                accountList.stream().filter(doc -> doc.getNameAccount().equalsIgnoreCase(searchName)).forEach(System.out::println);
+            } else {
+                throw new IllegalAccessException("""
+                        +----------+
+                        | Illegal !|
+                        +----------+""");
+            }
+        } catch (IllegalAccessException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
     public void sortAccount() {
-        accountList.sort(Comparator.comparing(Account::getAccountNumber));
-        for (Account account : accountList) {
-            System.out.println(account);
+        Scanner sc = new Scanner(System.in);
+        System.out.println(" Do you want to Sort by name or account number? ");
+        System.out.println("""
+                ====================================
+                |1.Sort By Name <=                 |
+                |2.Sort by Account Number <=   |
+                |3.Sort by Account Money <= |
+                ====================================""");
+        String xepSep = sc.nextLine();
+        String name = "1";
+        String num = "2";
+        String numMoney = "3";
+        try {
+            if (name.equals(xepSep)) {
+                accountList.sort(Comparator.comparing(Account::getNameAccount));
+                for (Account account : accountList) {
+                    System.out.println(account);
+                }
+            } else if (num.equals(xepSep)) {
+                accountList.sort(Comparator.comparing(Account::getAccountNumber));
+                for (Account account : accountList) {
+                    System.out.println(account);
+                }
+            } else if (numMoney.equals(xepSep)) {
+                accountList.sort(Comparator.comparing(Account::getAccountAmount));
+            } else {
+                throw new IllegalAccessException("""
+                        +----------+
+                        | Illegal !|
+                        +----------+""");
+            }
+        } catch (IllegalAccessException e) {
+            System.err.println(e.getMessage());
+
         }
     }
+
 
     public static void Used() {
         String tk = "1";
@@ -236,15 +371,15 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
                         | Logged in successfully  |
                         +-------------------------+""");
             } else {
-               throw new IllegalAccessException("""
-                       +-----------------------------+
-                       | Wrong Account And Password !|
-                       +-----------------------------+""");
+                throw new IllegalAccessException("""
+                        +-----------------------------+
+                        | Wrong Account And Password !|
+                        +-----------------------------+""");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             System.exit(1);
         }
     }
 
-    }
+}
