@@ -51,6 +51,7 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
                 break;
             }
         }
+        writeFile.writeToFile(accountList);
     }
 
     public void withdrawMoney() {
@@ -77,6 +78,7 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
                 break;
             }
         }
+        writeFile.writeToFile(accountList);
     }
 
     public void transferMoney() {
@@ -116,6 +118,7 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
                 }
             }
         }
+        writeFile.writeToFile(accountList);
     }
 
 
@@ -126,6 +129,7 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
             System.out.println(account);
 
         }
+        writeFile.writeToFile(accountList);
     }
 
     @Override
@@ -157,6 +161,7 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
             accountList.add(account);
 
         }
+        writeFile.writeToFile(accountList);
 
     }
 
@@ -182,12 +187,12 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
                 int num = sc.nextInt();
                 sc.nextLine();
                 System.out.println("Do you want to delete? ");
-                String agree = sc.nextLine();
                 System.out.println("""
                         +----------+
                         |a. Yes    |
                         |b. No     |
                         +----------+""");
+                String agree = sc.nextLine();
                 if (agree.equals(yes)) {
                     for (int i = 0; i < accountList.size(); i++) {
                         if (accountList.get(i).getAccountNumber() == num) {
@@ -256,6 +261,7 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
+        writeFile.writeToFile(accountList);
     }
 
     @Override
@@ -271,6 +277,7 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
                 break;
             }
         }
+        writeFile.writeToFile(accountList);
     }
 
     @Override
@@ -289,7 +296,7 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
 
 
             if (num.equals(tim)) {
-                System.out.println("nhap stk muon tim : ");
+                System.out.println("Enter the account number you want to find : ");
                 int searchNum = sc.nextInt();
                 for (int i = 0; i < accountList.size(); i++) {
                     if (accountList.get(i).getAccountNumber() == searchNum) {
@@ -309,6 +316,7 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
         } catch (IllegalAccessException e) {
             System.out.println(e.getMessage());
         }
+        writeFile.writeToFile(accountList);
     }
 
     @Override
@@ -348,10 +356,12 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
             System.err.println(e.getMessage());
 
         }
+        writeFile.writeToFile(accountList);
     }
 
 
     public static void Used() {
+
         String tk = "1";
         String mk = "1";
         Scanner sc = new Scanner(System.in);
