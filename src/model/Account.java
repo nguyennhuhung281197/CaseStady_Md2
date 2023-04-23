@@ -1,6 +1,8 @@
-package modent;
+package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Account implements Serializable {
     private int accountNumber;
@@ -42,7 +44,7 @@ public class Account implements Serializable {
 
     @Override
     public String toString() {
-        return "" + '\t'+'\t'+'\t' + accountNumber + '\t'+'\t'+'\t' + nameAccount + '\t'+'\t'+'\t' + accountAmount + "$";
+        return "" + '\t' + '\t' + '\t' + accountNumber + '\t' + '\t' + '\t' + nameAccount + '\t' + '\t' + '\t' + accountAmount + "$";
     }
 
 
