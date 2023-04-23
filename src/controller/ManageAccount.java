@@ -4,17 +4,18 @@ import base.AbstractMethod;
 import base.InterfaceAccount;
 import fileio.ReadFile;
 import fileio.WriteFile;
-import modent.Account;
+import model.Account;
+import model.User;
 
-import java.io.*;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class ManageAccount extends AbstractMethod implements InterfaceAccount {
 
     private List<Account> accountList;
-
     private ReadFile<Account> readFile;
-    private WriteFile<Account>writeFile;
+    private WriteFile<Account> writeFile;
 
     public ManageAccount() {
         accountList = new ArrayList<>();
@@ -25,8 +26,185 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
 
     public ManageAccount(List<Account> accountList) {
         this.accountList = accountList;
+    }
+
+    @Override
+    public void register3G() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("""
+                +-----------------+
+                |1.goi 1 nam      |
+                |2.goi 30 ngay    |
+                |3.goi 7 ngay     |
+                |4.goi 3 ngay     |
+                |0.Exit           |
+                +-----------------+
+                """);
+        System.out.println("Please Enter : ");
+        int input = sc.nextInt();
+        sc.nextLine();
+        System.out.println("tim stk  ");
+        int search = sc.nextInt();
+        for (Account account : accountList) {
+            if (account.getAccountNumber() == search) {
+                System.out.println(account);
+                switch (input) {
+                    case 1:
+                        LocalDate startDate = LocalDate.of(2023, 4, 21);
+                        LocalDate endDate = startDate.plus(1, ChronoUnit.YEARS);
+                        System.out.println("Tu ngay : " + startDate + " Hạn sử dụng 3G : " + endDate);
+                        break;
+                    case 2:
+                        LocalDate startDate1 = LocalDate.of(2023, 4, 21);
+                        LocalDate endDate1 = startDate1.plus(30, ChronoUnit.DAYS);
+                        System.out.println("Tu ngay : " + startDate1 + " Hạn sử dụng 3G : " + endDate1);
+                        break;
+                    case 3:
+                        LocalDate startDate2 = LocalDate.of(2023, 4, 21);
+                        LocalDate endDate2 = startDate2.plus(7, ChronoUnit.DAYS);
+                        System.out.println("Tu ngay" + startDate2 + "Hạn sử dụng 3G: " + endDate2);
+                        break;
+                    case 4:
+                        LocalDate startDate3 = LocalDate.of(2023, 4, 21);
+                        LocalDate endDate3 = startDate3.plus(3, ChronoUnit.DAYS);
+                        System.out.println("Tu ngay" + startDate3 + "Hạn sử dụng 3G: " + endDate3);
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        System.err.println("""
+                                +-----------+
+                                | Invalid ! |
+                                +-----------+""");
+                        break;
+
+                }
+            }
+        }
 
     }
+
+
+    @Override
+    public void rechargeCard() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println(" Enter the account number to top up the card : ");
+        int search = sc.nextInt();
+        sc.nextLine();
+        System.out.println("""
+                +-------------------------+
+                |1.Load Card 20$          |
+                |2.LOAD Card 50$          |
+                |3.LOAD Card 100$         |
+                |4.LOAD Card 200$         |
+                |5.LOAD Card 500$         |
+                |6.LOAD AS REQUIRED       |
+                +-------------------------+
+                """);
+        System.out.println("Please Enter Number : ");
+        int input = sc.nextInt();
+        for (Account account : accountList) {
+            if (account.getAccountNumber() == search) {
+                System.out.println(account);
+
+
+                int sub = 0;
+                switch (input) {
+                    case 1:
+                        if (account.getAccountAmount() <= 20) {
+                            System.out.println("""
+                                    +------------------------------+
+                                    |The amount is too specified ! |
+                                    +------------------------------+""");
+                        } else {
+                            sub += account.getAccountAmount() - 20;
+                            account.setAccountAmount(sub);
+                            System.out.println("Customer's Account Multi-loaded successfully: " + sub + "$");
+                            break;
+                        }
+                        break;
+
+                    case 2:
+                        if (account.getAccountAmount() <= 50) {
+                            System.out.println("""
+                                    +------------------------------+
+                                    |The amount is too specified ! |
+                                    +------------------------------+""");
+                        } else {
+                            sub += account.getAccountAmount() - 50;
+                            account.setAccountAmount(sub);
+                            System.out.println("Customer's Account Multi-loaded successfully: " + sub + "$");
+                            break;
+                        }
+                        break;
+                    case 3:
+                        if (account.getAccountAmount() <= 100) {
+                            System.out.println("""
+                                    +------------------------------+
+                                    |The amount is too specified ! |
+                                    +------------------------------+""");
+                        } else {
+                            sub += account.getAccountAmount() - 100;
+                            account.setAccountAmount(sub);
+                            System.out.println("Customer's Account Multi-loaded successfully: " + sub + "$");
+                            break;
+                        }
+                        break;
+                    case 4:
+                        if (account.getAccountAmount() <= 200) {
+                            System.out.println("""
+                                    +------------------------------+
+                                    |The amount is too specified ! |
+                                    +------------------------------+""");
+                        } else {
+                            sub += account.getAccountAmount() - 200;
+                            account.setAccountAmount(sub);
+                            System.out.println("Customer's Account Multi-loaded successfully: " + sub + "$");
+                            break;
+                        }
+                        break;
+                    case 5:
+                        if (account.getAccountAmount() <= 500) {
+                            System.out.println("""
+                                    +------------------------------+
+                                    |The amount is too specified ! |
+                                    +------------------------------+""");
+                        } else {
+                            sub += account.getAccountAmount() - 500;
+                            account.setAccountAmount(sub);
+                            System.out.println("Customer's Account Multi-loaded successfully: " + sub + "$");
+                            break;
+                        }
+                        break;
+                    case 6:
+                        System.out.println("Enter the amount you want to deposit : ");
+                        int nap = sc.nextInt();
+                        if (nap > account.getAccountAmount()) {
+                            System.out.println("""
+                                    +------------------------------+
+                                    |The amount is too specified ! |
+                                    +------------------------------+""");
+                        } else {
+                            sub += account.getAccountAmount() - nap;
+                            account.setAccountAmount(sub);
+                            System.out.println("Customer's Account Multi-loaded successfully : " + sub + "$");
+                            break;
+                        }
+                        break;
+                    default:
+                        System.out.println("""
+                                +-----------+
+                                | Invalid ! |
+                                +-----------+""");
+                        break;
+
+                }
+            }
+        }
+        writeFile.writeToFile(accountList);
+
+    }
+
 
     public void loadMoney() {
         Scanner sc = new Scanner(System.in);
@@ -54,6 +232,7 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
         writeFile.writeToFile(accountList);
     }
 
+
     public void withdrawMoney() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter The Amount You Want To Withdraw : ");
@@ -80,6 +259,7 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
         }
         writeFile.writeToFile(accountList);
     }
+
 
     public void transferMoney() {
         Scanner sc = new Scanner(System.in);
@@ -127,9 +307,7 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
         System.out.printf("%-10s %-20s %-20s\n", "Number Account ", '\t' + "Name Account", "Account Amount");
         for (Account account : accountList) {
             System.out.println(account);
-
         }
-        writeFile.writeToFile(accountList);
     }
 
     @Override
@@ -144,25 +322,35 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
 
         System.out.println("Enter Account Amount : ");
         double amount = sc.nextDouble();
-        boolean check = false;
-        for (Account account : accountList) {
-            if (account.getAccountNumber() == number) {
-                check = true;
-                break;
+        try {
+            if (amount < 0) {
+                throw new IllegalAccessException("Invalid amount! Amount must be greater than or equal to 0.");
+
             }
-        }
-        if (check) {
-            System.err.println("""
-                    +------------------------+
-                    | Number Already Exist ! |
-                    +------------------------+""");
-        } else {
-            Account account = new Account(number, name, amount);
-            accountList.add(account);
+            boolean check = false;
+            for (Account account : accountList) {
+                if (account.getAccountNumber() == number) {
+                    check = true;
+                    break;
+                }
 
+            }
+            if (check) {
+                throw new IllegalAccessException("""
+                        +------------------------+
+                        | Number Already Exist ! |
+                        +------------------------+""");
+            } else {
+                Account account = new Account(number, name, amount);
+                accountList.add(account);
+
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
+
+
         writeFile.writeToFile(accountList);
-
     }
 
     @Override
@@ -207,9 +395,7 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
                     }
                     if (check) {
                         System.out.println("Successful delete");
-                        for (Account account : accountList) {
-                            System.out.println(account);
-                        }
+
                     } else {
                         System.out.println("Does not exist");
                     }
@@ -286,7 +472,7 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
         System.out.println("Want to search for an account name or number?");
         System.out.println("""
                 ====================================
-                |1.Search by account name <=  |
+                |1.Search by account name <=      |
                 |2.Search account number <=       |
                 ====================================""");
         String tim = sc.nextLine();
@@ -314,10 +500,11 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
                         +----------+""");
             }
         } catch (IllegalAccessException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
         writeFile.writeToFile(accountList);
     }
+
 
     @Override
     public void sortAccount() {
@@ -326,8 +513,8 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
         System.out.println("""
                 ====================================
                 |1.Sort By Name <=                 |
-                |2.Sort by Account Number <=   |
-                |3.Sort by Account Money <= |
+                |2.Sort by Account Number <=       |
+                |3.Sort by Account Money <=        |
                 ====================================""");
         String xepSep = sc.nextLine();
         String name = "1";
@@ -360,36 +547,5 @@ public class ManageAccount extends AbstractMethod implements InterfaceAccount {
     }
 
 
-    public static void Used() {
-
-        String tk = "1";
-        String mk = "1";
-        Scanner sc = new Scanner(System.in);
-        System.out.println(" User Name : ");
-        String name = sc.nextLine();
-        System.out.println(" Password  : ");
-        String pass = sc.nextLine();
-        boolean check = false;
-        try {
-            if (tk.equals(name) || mk.equals(pass)) {
-                check = true;
-            }
-
-            if (check) {
-                System.out.println("""
-                        +-------------------------+
-                        | Logged in successfully  |
-                        +-------------------------+""");
-            } else {
-                throw new IllegalAccessException("""
-                        +-----------------------------+
-                        | Wrong Account And Password !|
-                        +-----------------------------+""");
-            }
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            System.exit(1);
-        }
-    }
 
 }
