@@ -24,39 +24,36 @@ public class ManageUser {
                 "x : is a number or letter without special characters !");
         System.out.print("User name :");
         String username = sc.nextLine();
-        System.out.print(" Password :");
+        System.out.print("Password :");
         String password = sc.nextLine();
         EmailExample emailExample = new EmailExample();
         boolean isValid = emailExample.validate(username);
-        if (isValid){
+
+        if (isValid) {
             User user = new User(username, password);
             users.add(user);
             System.out.println("""
-                +-----------------+
-                | Sign Up Success |
-                +-----------------+""");
-        }else {
+                    +-----------------+
+                    | Sign Up Success |
+                    +-----------------+""");
+        } else {
             System.out.println("""
                     +------------+
                     | Illegal !  |
                     +------------+""");
         }
-
-
-
     }
-
 
     public void login() {
         Scanner sc = new Scanner(System.in);
         System.out.print("User name :");
-        String username = sc.nextLine();
+        String name = sc.nextLine();
         System.out.print("Password :");
-        String password = sc.nextLine();
+        String pass = sc.nextLine();
 
         boolean check = false;
         for (User user : users) {
-            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+            if (user.getUsername().equals(name) && user.getPassword().equals(pass)) {
                 check = true;
                 break;
             }
@@ -77,4 +74,5 @@ public class ManageUser {
 
         }
     }
+
 }

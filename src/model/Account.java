@@ -44,7 +44,7 @@ public class Account implements Serializable {
 
     @Override
     public String toString() {
-        return "" + '\t' + '\t' + '\t' + accountNumber + '\t' + '\t' + '\t' + nameAccount + '\t' + '\t' + '\t' + accountAmount + "$";
+        return "" + '\t' + '\t' + '\t'+ accountNumber + '\t' + '\t' + '\t'+ " " + nameAccount + '\t' + '\t' + '\t'+  " "+ accountAmount + "$";
     }
 
 

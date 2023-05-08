@@ -1,6 +1,10 @@
 package base;
 
 public interface InterfaceAccount {
-    void searchAccount();
-    void sortAccount();
+  void register3G();
+  void rechargeCard();
+
+
+
+
 }
